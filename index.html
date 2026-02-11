@@ -3,233 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banana Engine 2D Docs</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Banana Engine | High-Performance Data-Driven Game Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --banana: #f7df1e;
-            --bg: #000000;
-            --sidebar: #0d0d0d;
-            --border: #222;
+            --bg: #0a0a0a;
+            --card: #141414;
             --text: #ffffff;
-            --text-dim: #aaa;
+            --dim: #999;
+            --accent: #222;
         }
 
-        body {
-            font-family: sans-serif;
+        body, html {
+            margin: 0; padding: 0;
             background: var(--bg);
             color: var(--text);
-            margin: 0;
+            font-family: 'Fira Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        header {
+            height: 75px;
+            background: #000;
             display: flex;
-            height: 100vh;
+            align-items: center;
+            padding: 0 5%;
+            border-bottom: 2px solid var(--banana);
+            justify-content: space-between;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            box-sizing: border-box;
         }
 
-        /* SIDEBAR */
-        .sidebar {
-            width: 260px;
-            background: var(--sidebar);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-        }
+        .logo-box { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .logo-img { width: 42px; height: 42px; border-radius: 8px; border: 1px solid var(--banana); }
+        .logo-text { font-weight: 800; font-size: 1.6rem; letter-spacing: -1px; }
+        .logo-text span { color: var(--banana); }
 
-        .logo {
-            padding: 30px 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--banana);
+        nav a {
+            color: var(--dim);
             text-decoration: none;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-section { padding: 20px; }
-        .nav-title { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 10px; }
-        
-        .nav-link {
-            display: block;
-            padding: 10px;
-            color: var(--text-dim);
-            text-decoration: none;
-            border-radius: 5px;
-            margin-bottom: 5px;
+            margin-left: 25px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: 0.3s;
             cursor: pointer;
         }
+        nav a:hover, nav a.active { color: var(--banana); }
 
-        .nav-link:hover, .nav-link.active { background: #1a1a1a; color: var(--banana); }
+        /* Page System */
+        .page {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            padding: 100px 8% 50px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            animation: pageTransition 0.5s ease-out;
+        }
+        .active-page { display: block; }
 
-        /* CONTENT */
-        .content { flex: 1; overflow-y: auto; padding: 60px; }
-        .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes pageTransition {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Content Elements */
+        h1 { font-size: 4rem; color: var(--banana); margin: 0 0 20px 0; font-weight: 800; }
+        .section-desc { font-size: 1.3rem; color: var(--dim); max-width: 800px; margin-bottom: 50px; }
 
-        /* CODE & COPY */
-        .code-container {
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--card);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid var(--accent);
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--banana); transform: translateY(-5px); }
+        .card h3 { color: var(--banana); margin-top: 0; font-family: 'Fira Code', monospace; }
+        .card p { color: var(--dim); font-size: 0.95rem; line-height: 1.6; }
+
+        /* Setup Steps */
+        .setup-container { max-width: 900px; }
+        .step-block {
             background: #111;
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 8px;
-            position: relative;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--banana);
+        }
+        .step-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+        .step-num { background: var(--banana); color: #000; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 800; }
+        
+        /* Code Box */
+        pre {
+            background: #000;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            font-family: 'Fira Code', monospace;
+            overflow-x: auto;
+            color: #d1d1d1;
             margin: 20px 0;
         }
 
-        .code-block { font-family: monospace; color: #dcdcaa; white-space: pre-wrap; margin: 0; }
-        
-        .copy-btn {
-            position: absolute; top: 10px; right: 10px;
-            background: #333; color: #fff; border: none;
-            padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem;
+        /* Buttons */
+        .btn-main {
+            background: var(--banana);
+            color: #000;
+            padding: 20px 60px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.4rem;
+            display: inline-block;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
         }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(247, 223, 30, 0.4); }
 
-        h1 { color: var(--banana); font-size: 2.5rem; }
-        h2 { border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 40px; }
-        p { line-height: 1.6; color: #ccc; font-size: 1.1rem; }
+        .footer-note { text-align: center; color: #444; font-size: 0.8rem; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <a href="#" class="logo">🍌 BANANA.JS</a>
-        
-        <div class="nav-section">
-            <div class="nav-title">Basics</div>
-            <div class="nav-link active" onclick="showPage('welcome')">Summary</div>
-            <div class="nav-link" onclick="showPage('init')">Banana.Init()</div>
-            <div class="nav-link" onclick="showPage('loop')">Main Loop</div>
-            <div class="nav-link" onclick="showPage('clear')">Banana.Clear()</div>
+<header>
+    <div class="logo-box" onclick="showPage('home')">
+        <img src="https://i.ibb.co/Dft4QhV8/logo.jpg" alt="Banana Logo" class="logo-img">
+        <div class="logo-text">BANANA<span>ENGINE</span></div>
+    </div>
+    <nav>
+        <a onclick="showPage('features')">Features</a>
+        <a onclick="showPage('docs')">Documentation</a>
+        <a onclick="showPage('setup')">Download & Setup</a>
+    </nav>
+</header>
+
+<div id="home" class="page active-page">
+    <h1>Bite The Code.</h1>
+    <p class="section-desc">Experience the power of a data-driven 3D/2D engine optimized for ultra-low latency and low-end hardware. Built for the next generation of web and desktop gaming.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Lightning Fast</h3>
+            <p>Dragon Bite core handles thousands of entities with zero performance drop. Optimized for both integrated and dedicated GPUs.</p>
         </div>
-
-        <div class="nav-section">
-            <div class="nav-title">Features</div>
-            <div class="nav-link" onclick="showPage('checkcol')">Banana.CheckCol()</div>
-            <div class="nav-link" onclick="showPage('drawjoy')">Banana.DrawJoy()</div>
-            <div class="nav-link" onclick="showPage('vibrate')">Banana.Vibrate()</div>
+        <div class="card">
+            <h3>Pro Tooling</h3>
+            <p>A complete standalone IDE (v1.9 Ultra) that allows you to code, test, and export your games in seconds.</p>
         </div>
-
-        <div class="nav-section">
-            <div class="nav-title">Play</div>
-            <div class="nav-link" onclick="showPage('minigame')" style="color:var(--banana)">Simple Game</div>
+        <div class="card">
+            <h3>Zero Dependency</h3>
+            <p>Tiny runtime footprint. Your exported games run on any modern browser without heavy loads.</p>
         </div>
-    </aside>
+    </div>
+    <br><br>
+    <button class="btn-main" onclick="showPage('setup')">Download v1.9 PRO</button>
+</div>
 
-    <main class="content">
+<div id="features" class="page">
+    <h1>Engine Features</h1>
+    <p class="section-desc">Banana Engine comes packed with 10+ professional-grade features ready for production.</p>
+    <div class="grid">
+        <div class="card"><h3>01. Dynamic Shadows</h3><p>Advanced real-time shadow casting for all geometry and textures.</p></div>
+        <div class="card"><h3>02. Mobile Zoom Fix</h3><p>Exclusive technology that prevents accidental viewport zooming on mobile browsers.</p></div>
+        <div class="card"><h3>03. Smart Joystick</h3><p>Responsive virtual controls with automatic multi-touch detection.</p></div>
+        <div class="card"><h3>04. Async Loader</h3><p>Load 3D models and high-res sprites without freezing the main thread.</p></div>
+        <div class="card"><h3>05. Haptic Feedback</h3><p>One-line vibration support for immersive mobile gameplay.</p></div>
+        <div class="card"><h3>06. Matrix Transform</h3><p>Professional rotation, translation, and scaling for all render calls.</p></div>
+        <div class="card"><h3>07. Physics Core</h3><p>High-precision AABB collision system for pixel-perfect interactions.</p></div>
+        <div class="card"><h3>08. Persistent Data</h3><p>Built-in LocalStorage API for seamless game saves and cloud sync readiness.</p></div>
+        <div class="card"><h3>09. Screen Shake</h3><p>Adjustable intensity shake effects for realistic combat and impacts.</p></div>
+        <div class="card"><h3>10. Export Pipeline</h3><p>Compiles your project into a single, optimized HTML file instantly.</p></div>
+    </div>
+</div>
 
-        <div id="welcome" class="page active">
-            <h1>Welcome to Banana Engine</h1>
-            <p><strong>Banana Engine 2D</strong> is a high-speed, lightweight game engine for the web. It is built by <strong>Dighmations Studio</strong> to make game development easy and fast, even on weak computers.</p>
-            <h2>Top Features</h2>
-            <ul>
-                <li><strong>Ultra Fast:</strong> Low CPU usage, high FPS.</li>
-                <li><strong>Mobile Ready:</strong> Built-in Joystick and Vibrate.</li>
-                <li><strong>Simple API:</strong> You don't need to be a pro to make a game.</li>
-            </ul>
-        </div>
-
-        <div id="init" class="page">
-            <h1>Banana.Init()</h1>
-            <p>This function starts the engine and sets your game screen size.</p>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">Banana.Init(800, 450);</pre>
-            </div>
-            <p>It creates the canvas and prepares the engine for drawing.</p>
-        </div>
-
-        <div id="loop" class="page">
-            <h1>The Main Loop</h1>
-            <p>The loop runs your game at 60 frames per second. Everything that moves must be inside this loop.</p>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">function loop() {
-    Banana.Clear();
-    // Your game code here
-    requestAnimationFrame(loop);
-}
-loop();</pre>
-            </div>
-        </div>
-
-        <div id="clear" class="page">
-            <h1>Banana.Clear()</h1>
-            <p><strong>Banana.Clear()</strong> is the most important command for a clean game. It wipes the screen every frame so your player doesn't leave a "trail" behind while moving.</p>
-            
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">Banana.Clear();</pre>
-            </div>
-            <h2>Why Use It?</h2>
-            <p>In a 2D engine, "moving" an object actually means drawing it in a new position. Without <code>Clear()</code>, the old drawings stay on the screen. Always put this at the top of your <strong>Loop</strong>.</p>
-        </div>
-
-        <div id="vibrate" class="page">
-            <h1>Banana.Vibrate()</h1>
-            <p>This command makes the player's phone vibrate. It is perfect for explosions, taking damage, or collecting items.</p>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">Banana.Vibrate(100);</pre>
-            </div>
-            <h2>How to Use</h2>
-            <p>The number inside the brackets is <strong>milliseconds</strong> (1000 = 1 second). Use a small number like <code>50</code> for a light hit, and <code>500</code> for a big explosion.</p>
-        </div>
-
-        <div id="checkcol" class="page">
-            <h1>Banana.CheckCol()</h1>
-            <p>Checks if two boxes are touching each other.</p>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">if (Banana.CheckCol(player, enemy)) {
-    // Game over!
-}</pre>
-            </div>
-        </div>
-
-        <div id="drawjoy" class="page">
-            <h1>Banana.DrawJoy()</h1>
-            <p>Draws a mobile joystick on the screen for player movement.</p>
-            
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">Banana.DrawJoy(100, 300, 50, "yellow");</pre>
-            </div>
-        </div>
-
-        <div id="minigame" class="page">
-            <h1>Basic Game Code</h1>
-            <p>Copy this to start your first game!</p>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                <pre class="code-block">Banana.Init(800, 400);
-let p = { x: 50, y: 50, w: 40, h: 40 };
-
+<div id="docs" class="page">
+    <h1>API Documentation</h1>
+    <p class="section-desc">Complete guide for the Banana Engine v1.9 Ultra API functions.</p>
+    <div class="grid">
+        <div class="card"><h3>Banana.Init(w, h)</h3><p>Initializes the engine with specific width and height.</p></div>
+        <div class="card"><h3>Banana.Clear()</h3><p>Clears the current frame for the next render call.</p></div>
+        <div class="card"><h3>Banana.DrawJoy(bx, by, br, c)</h3><p>Renders a virtual joystick at coordinates with color.</p></div>
+        <div class="card"><h3>Banana.LoadModel(url)</h3><p>Returns a Model object from a given image/sprite URL.</p></div>
+        <div class="card"><h3>Banana.DrawRect(x,y,w,h,c)</h3><p>Draws a filled rectangle on the canvas.</p></div>
+        <div class="card"><h3>Banana.SetShadow(x,y,b,c)</h3><p>Configures global shadow offset, blur, and color.</p></div>
+        <div class="card"><h3>Banana.Shake(intensity)</h3><p>Triggers a camera shake effect with given power.</p></div>
+        <div class="card"><h3>Banana.Vibrate(ms)</h3><p>Sends a vibration pulse to supported mobile devices.</p></div>
+        <div class="card"><h3>Banana.CheckCol(r1, r2)</h3><p>Checks intersection between two rectangular objects.</p></div>
+        <div class="card"><h3>Banana.StorageSet(k, v)</h3><p>Stores data key-value pair in the browser memory.</p></div>
+    </div>
+    <br>
+    <h3>Quick Loop Example:</h3>
+    <pre>
+Banana.Init(1280, 720);
 function loop() {
-    Banana.Clear();
-    if(Banana.TouchDown()) p.x += 5;
-    Banana.DrawRect(p.x, p.y, p.w, p.h, "white");
-    requestAnimationFrame(loop);
+  Banana.Clear();
+  Banana.DrawText("Dragon Bite Active", 100, 100, 30, "yellow");
+  Banana.DrawJoy(150, 500, 60, "rgba(255,255,255,0.2)");
+  requestAnimationFrame(loop);
 }
-loop();</pre>
+loop();
+    </pre>
+</div>
+
+<div id="setup" class="page">
+    <h1>Setup & Installation</h1>
+    <div class="setup-container">
+        <div class="step-block">
+            <div class="step-header">
+                <div class="step-num">1</div>
+                <h3>Download BananaEngine IDE</h3>
             </div>
+            <p>Download the standalone Windows executable. It contains the editor, core libraries, and the compiler.</p>
+            <br>
+            <a href="https://github.com/smammadov409-gif/bananaengine.exe" class="btn-main" style="font-size: 1rem; padding: 15px 40px;">DOWNLOAD .EXE (v1.9)</a>
         </div>
 
-    </main>
+        <div class="step-block">
+            <div class="step-header">
+                <div class="step-num">2</div>
+                <h3>Start Your Project</h3>
+            </div>
+            <p>Open <b>BananaEngine.exe</b>. No installation required. Use the built-in Monaco editor to write your logic using the API documented in the "Docs" tab.</p>
+        </div>
 
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+        <div class="step-block">
+            <div class="step-header">
+                <div class="step-num">3</div>
+                <h3>Run & Export</h3>
+            </div>
+            <p>Click <b>"RUN ENGINE"</b> to preview your game instantly. Once finished, click <b>"EXPORT HTML"</b> to get your final production-ready game file.</p>
+        </div>
+    </div>
+    <p class="footer-note">DIGHTMANS STUDIO | MEMBER OF JS.ORG | BUILT WITH RUST CORE</p>
+</div>
 
-        function copyCode(button) {
-            const code = button.nextElementSibling.innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                const old = button.innerText;
-                button.innerText = "COPIED!";
-                setTimeout(() => { button.innerText = old; }, 1000);
-            });
-        }
-    </script>
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        const activeLink = document.querySelector(`nav a[onclick="showPage('${pageId}')"]`);
+        if(activeLink) activeLink.classList.add('active');
+        
+        // Scroll to top
+        document.getElementById(pageId).scrollTop = 0;
+    }
+</script>
+
 </body>
 </html>
