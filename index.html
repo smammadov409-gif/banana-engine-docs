@@ -3,215 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volt Core | Sovereign Independence</title>
+    <title>Volt EXE Builder | Professional HTML to EXE Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Tasarım Temelleri */
         body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.7;
-            scroll-behavior: smooth; /* Akıcı kaydırma eklendi */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 80px 20px;
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%);
         }
-
-        /* Siyah-Beyaz Karışımı Logo */
-        .logo-container {
-            text-align: center;
-            margin-bottom: 60px;
+        .accent-glow {
+            box-shadow: 0 0 40px -10px #38bdf8;
         }
-
-        .volt-logo {
-            font-size: 150px;
-            font-family: 'Impact', sans-serif;
-            display: inline-block;
-            background: linear-gradient(to bottom, #ffffff 50%, #000000 50%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            border: 5px solid #ffffff;
-            padding: 0 40px;
-            letter-spacing: -10px;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-        }
-
-        h1, h2 {
-            font-family: 'Consolas', monospace;
-            text-transform: uppercase;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-top: 50px;
-        }
-
-        p {
-            font-size: 18px;
-            color: #cccccc;
-        }
-
-        .code-box {
-            background: #111111;
-            border: 1px solid #ffffff;
-            padding: 25px;
-            font-family: 'Consolas', monospace;
-            margin: 30px 0;
-            position: relative;
-            overflow-x: auto;
-        }
-
-        .feature-item {
-            margin-bottom: 25px;
-            border-left: 2px solid #ffffff;
-            padding-left: 20px;
-        }
-
-        .feature-item strong {
-            display: block;
-            font-size: 22px;
-            color: #ffffff;
-        }
-
-        /* YENİ: İndirme Butonu Stili */
-        .download-btn {
-            display: block;
-            width: 100%;
-            background-color: #ffffff;
-            color: #000000;
-            padding: 25px;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-            text-align: center;
-            font-family: 'Impact', sans-serif;
-            border: 2px solid #ffffff;
-            cursor: pointer;
-            margin-top: 60px;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .download-btn:hover {
-            background-color: #000000;
-            color: #ffffff;
-        }
-
-        /* YENİ: Rehber Paneli Stili */
-        #setup-guide {
-            display: none;
-            background: #ffffff;
-            color: #000000;
-            padding: 40px;
-            margin-top: 30px;
-            border: 1px solid #ffffff;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .guide-step { margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px; font-weight: bold; }
-
-        footer {
-            margin-top: 100px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #222;
-            padding: 40px;
-        }
-
-        /* Seçim Rengi */
-        ::selection {
-            background: #ffffff;
-            color: #000000;
+        .btn-gradient {
+            background: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%);
         }
     </style>
 </head>
-<body>
+<body class="hero-gradient min-h-screen">
 
-<div class="container">
-    <div class="logo-container">
-        <div class="volt-logo">V</div>
-        <p style="margin-top: 20px; font-family: 'Consolas'; color: #fff;">VOLT CORE INDEPENDENT ENGINE</p>
-    </div>
+    <header class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+        <div class="text-2xl font-extrabold tracking-tighter italic">
+            VOLT<span class="text-sky-500">PRO</span>
+        </div>
+        <nav class="hidden md:flex space-x-10 text-sm font-semibold text-slate-400">
+            <a href="#" class="hover:text-sky-400 transition">Features</a>
+            <a href="#" class="hover:text-sky-400 transition">GitHub</a>
+            <a href="#" class="hover:text-sky-400 transition">Documentation</a>
+        </nav>
+    </header>
 
-    <section>
-        <h1>// Sovereign Power</h1>
-        <p>Volt is a standalone, native execution environment designed for high-performance computing and geometric rendering. It breaks the chains of interpreted languages, offering a pure binary experience. No Python, no virtual machines, just direct hardware communication.</p>
-    </section>
-
-    <a href="https://drive.google.com/uc?export=download&id=1_GFDfXw9N9CHcjme3IDJ_VZ3UP2ojMqE" id="dl-trigger" class="download-btn">DOWNLOAD VOLT CORE (.ZIP)</a>
-
-    <div id="setup-guide">
-        <h2 style="color: #000; border-color: #000; margin-top: 0;">// Deployment Steps</h2>
-        <div class="guide-step">01. Extract the downloaded Volt.zip file.</div>
-        <div class="guide-step">02. Write your script in main.vt.</div>
-        <div class="guide-step">03. Open terminal in the folder.</div>
-        <div class="guide-step">04. Run: .\VoltCore.exe run main.vt</div>
-        <p style="font-size: 14px; margin-top: 20px; color: #444;">*Independence confirmed. Native kernel online.</p>
-    </div>
-
-    <section>
-        <h1>// Core Capabilities</h1>
+    <main class="max-w-5xl mx-auto px-6 pt-20 pb-32 text-center">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold uppercase tracking-widest mb-8">
+            v1.0 is now available
+        </div>
         
-        <div class="feature-item">
-            <strong>Native Binary Execution</strong>
-            VoltCore.exe operates as a sovereign entity. It processes .vt scripts directly through its internal kernel, ensuring 0% dependency on external runtimes.
-        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
+            Turn Web Projects into <br>
+            <span class="text-sky-500">Native Windows Apps</span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12">
+            The fastest way to bundle your HTML, CSS, and JS into a single, high-performance executable file. No dependencies, no hassle.
+        </p>
 
-        <div class="feature-item">
-            <strong>Universal Geometry Engine</strong>
-            The engine features a built-in vector rendering pipeline capable of projecting complex 3D and 2D geometries with full RGB color support at the core level.
+        <div class="flex flex-col items-center gap-4">
+            <a href="Volt_Setup.exe" download 
+               class="btn-gradient px-10 py-5 rounded-2xl text-white font-bold text-xl accent-glow hover:scale-105 transition-transform active:scale-95 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                DOWNLOAD SETUP
+            </a>
+            <span class="text-slate-500 text-sm font-medium">Compatible with Windows 10 & 11 (64-bit)</span>
         </div>
+    </main>
 
-        <div class="feature-item">
-            <strong>Direct Event Interfacing</strong>
-            Real-time hooks for peripheral inputs allow developers to map hardware events (Mouse/Keyboard) directly to engine functions with minimal latency.
+    <section class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/50">
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="space-y-4">
+                <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400 font-bold text-xl">1</div>
+                <h3 class="text-xl font-bold">Single File Output</h3>
+                <p class="text-slate-400 leading-relaxed">Bundles all your assets into one compact .exe for easy distribution.</p>
+            </div>
+            <div class="space-y-4">
+                <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400 font-bold text-xl">2</div>
+                <h3 class="text-xl font-bold">Custom Branding</h3>
+                <p class="text-slate-400 leading-relaxed">Add your own icons and metadata to give your app a professional feel.</p>
+            </div>
+            <div class="space-y-4">
+                <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400 font-bold text-xl">3</div>
+                <h3 class="text-xl font-bold">Offline Support</h3>
+                <p class="text-slate-400 leading-relaxed">Your web apps work seamlessly without an active internet connection.</p>
+            </div>
         </div>
     </section>
 
-    <section>
-        <h1>// Command Interface</h1>
-        <p>The Volt Command Line Interface (CLI) provides absolute control over the execution environment.</p>
-        <div class="code-box">
-            > .\VoltCore.exe run main.vt<br>
-            > [STATUS]: Kernel Initialized...<br>
-            > [RENDER]: Geometry Pipeline Active...<br>
-            > [EVENT]: Mouse/Keyboard Hooks Secured...
-        </div>
-    </section>
-
-    <section>
-        <h1>// VASM Scripting Language</h1>
-        <p>Volt uses the VASM (Volt Assembly-style Markup) language for direct kernel instructions.</p>
-        <div class="code-box">
-            vt.initialize()<br>
-            volt.hide_logo()<br>
-            volt.draw(shape: "cube", color: "#ffffff")<br>
-            volt.bind_key("A", "SYSTEM_OVERRIDE")
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2026 VOLT EMPIRE. STANDALONE. INDEPENDENT. SECURE.
+    <footer class="text-center py-20 border-t border-slate-900">
+        <p class="text-slate-600 text-sm italic">
+            Developed by Volt Studio &copy; 2026. All rights reserved.
+        </p>
     </footer>
-</div>
-
-<script>
-    document.getElementById('dl-trigger').addEventListener('click', function() {
-        // Butona basınca rehberi göster
-        const guide = document.getElementById('setup-guide');
-        guide.style.display = 'block';
-        // Rehbere doğru kaydır
-        setTimeout(() => {
-            guide.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-    });
-</script>
 
 </body>
 </html>
