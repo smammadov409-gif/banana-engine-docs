@@ -33,7 +33,7 @@ let users = {};
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
-    secure: false, // 587 için false olmalı
+    secure: false, 
     auth: { 
         user: process.env.EMAIL_USER, 
         pass: process.env.EMAIL_PASS 
@@ -80,16 +80,20 @@ app.post('/api/auth/verify', (req, res) => {
 app.get('/api/models', (req, res) => res.json(database));
 
 app.post('/api/upload', upload.fields([{ name: 'glb' }, { name: 'main' }]), (req, res) => {
-    const { name, description, owner, category } = req.body;
-    const model = { 
-        id: String(Date.now()), 
-        name: name || "Untitled",
-        glb: `/uploads/${req.files['glb'][0].filename}`,
-        main: `/uploads/${req.files['main'][0].filename}`,
-        likes: []
-    };
-    database.unshift(model);
-    res.json({ success: true });
+    try {
+        const { name, description, owner, category } = req.body;
+        const model = { 
+            id: String(Date.now()), 
+            name: name || "Untitled",
+            glb: `/uploads/${req.files['glb'][0].filename}`,
+            main: `/uploads/${req.files['main'][0].filename}`,
+            likes: []
+        };
+        database.unshift(model);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: "Upload hatası!" });
+    }
 });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
