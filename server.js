@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Klasör kontrolü
 if (!fs.existsSync('./uploads')) fs.mkdirSync('./uploads');
 
 const storage = multer.diskStorage({
@@ -21,32 +22,46 @@ const upload = multer({ storage });
 let database = []; 
 let users = {}; 
 
+// --- MAIL AYARI ---
 const transporter = nodemailer.createTransport({
     service: 'gmail',
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+    auth: { 
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS 
+    }
 });
 
-// AUTH
+// --- AUTH (GİRİŞ) ---
 app.post('/api/auth/send-otp', async (req, res) => {
     const { email } = req.body;
     const otp = Math.floor(100000 + Math.random() * 900000);
-    if(!users[email]) users[email] = { email };
-    users[email].otp = otp;
+    users[email] = { email, otp }; // OTP'yi hafızaya al
+    
     try {
         await transporter.sendMail({
-            from: `"Banana Corp"`, to: email, subject: 'Banana Key', text: `Code: ${otp}`
+            from: `"Banana Corp" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Banana Key',
+            text: `Banana Corp Giriş Kodun: ${otp}`
         });
+        console.log(`✅ Kod gönderildi: ${email} -> ${otp}`);
         res.json({ success: true });
-    } catch (e) { res.status(500).json({ error: "Email error" }); }
+    } catch (e) {
+        console.error("❌ Mail Hatası:", e);
+        res.status(500).json({ error: "Email gönderilemedi" });
+    }
 });
 
 app.post('/api/auth/verify', (req, res) => {
     const { email, otp } = req.body;
-    if (users[email] && String(users[email].otp) === String(otp)) res.json({ success: true });
-    else res.status(401).json({ error: "Invalid" });
+    if (users[email] && String(users[email].otp) === String(otp)) {
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ error: "Geçersiz kod" });
+    }
 });
 
-// MODELS
+// --- MODELLER ---
 app.get('/api/models', (req, res) => res.json(database));
 
 app.post('/api/upload', upload.fields([{ name: 'glb' }, { name: 'main' }]), (req, res) => {
@@ -66,22 +81,9 @@ app.post('/api/upload', upload.fields([{ name: 'glb' }, { name: 'main' }]), (req
     res.json({ success: true });
 });
 
-app.post('/api/models/:id/like', (req, res) => {
-    const m = database.find(x => String(x.id) === String(req.params.id));
-    const { email } = req.body;
-    if(m) {
-        if(!m.likes.includes(email)) m.likes.push(email);
-        return res.json({ success: true, count: m.likes.length });
-    }
-    res.status(404).json({ error: "Not Found" });
-});
-
-app.delete('/api/models/:id', (req, res) => {
-    const idx = database.findIndex(x => String(x.id) === String(req.params.id) && x.owner === req.body.userEmail);
-    if(idx !== -1) { database.splice(idx, 1); return res.json({ success: true }); }
-    res.status(403).send();
-});
-
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
-app.listen(3000, () => console.log("🚀 Banana HQ Online | Port 3000"));
+
+// RENDER İÇİN PORT AYARI
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Banana HQ Online | Port ${PORT}`));
