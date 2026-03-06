@@ -1,8 +1,15 @@
-// NETLİFY İÇİN DOĞRU ADRES (Gereksiz uzantıları sildik!)
+// NETLİFY İÇİN DOĞRU ADRES
 const API_BASE = "/.netlify/functions/auth";
 
 async function sendOtp() {
-    const emailInput = document.getElementById('emailInput');
+    // BURASI DÜZELDİ: HTML'deki ID olan "loginEmail" ile eşitledik!
+    const emailInput = document.getElementById('loginEmail'); 
+    
+    if (!emailInput) {
+        console.error("❌ Hata: loginEmail ID'li kutu bulunamadı!");
+        return;
+    }
+
     const email = emailInput.value.trim();
 
     if (!email) {
@@ -12,16 +19,17 @@ async function sendOtp() {
 
     console.log("🚀 Banana Key isteniyor:", email);
     
-    // Butonu geçici olarak kilitle (Çift tıklamayı önlemek için)
-    const btn = document.querySelector('button');
-    if(btn) btn.disabled = true;
+    // Butonu geçici olarak kilitle
+    const btn = document.getElementById('btn-otp');
+    if(btn) {
+        btn.disabled = true;
+        btn.innerText = "Gönderiliyor...";
+    }
 
     try {
         const res = await fetch(API_BASE, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email })
         });
 
@@ -29,22 +37,25 @@ async function sendOtp() {
 
         if (res.ok && data.success) {
             console.log("✅ Mail fırlatıldı!");
-            alert("Banana Key mail kutuna fırlatıldı! 🍌 Lütfen kontrol et (Spam kutusuna da bakmayı unutma).");
+            alert("Banana Key mail kutuna fırlatıldı! 🍌");
             
-            // Eğer varsa OTP giriş kutusunu burada gösterebilirsin
-            // document.getElementById('otp-section').style.display = 'block';
+            // Kod giriş ekranına geçiş yapalım (Senin HTML'indeki step'ler)
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
             
         } else {
             console.error("❌ Sunucu Hatası:", data.error);
-            alert("Hata: " + (data.error || "Mail gönderilemedi. Ayarları kontrol et kanka!"));
+            alert("Hata: " + (data.error || "Mail gönderilemedi."));
         }
     } catch (err) {
         console.error("🌐 Bağlantı Hatası:", err);
-        alert("Sunucuya bağlanılamadı. İnternetini veya Netlify ayarlarını kontrol et!");
+        alert("Sunucuya bağlanılamadı kanka!");
     } finally {
-        if(btn) btn.disabled = false;
+        if(btn) {
+            btn.disabled = false;
+            btn.innerText = "Get Access Key";
+        }
     }
 }
 
-// Sayfa yüklendiğinde konsola bir selam çakalım
 console.log("🍌 Banana App Başlatıldı... Netlify Modu Aktif!");
