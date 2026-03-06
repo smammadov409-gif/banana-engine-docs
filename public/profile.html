@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Banana Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="profile-bg">
+    <div class="profile-card glass">
+        <div class="avatar-container">
+            <img id="p-img" src="https://ui-avatars.com/api/?name=User" alt="Avatar">
+            <input type="file" id="p-file" accept="image/png, image/jpeg" style="display:none">
+            <button onclick="document.getElementById('p-file').click()" class="cam-btn">📸</button>
+        </div>
+        <h2 id="p-email-display"></h2>
+        <input type="text" id="p-name" placeholder="Full Name">
+        <textarea id="p-bio" placeholder="Tell us about your 3D journey..."></textarea>
+        <button onclick="saveProfile()" class="glow-btn">SAVE PROFILE</button>
+        <button onclick="location.href='/'" class="back-link">Home</button>
+    </div>
+
+    <script>
+        const user = localStorage.getItem('bananaUser');
+        document.getElementById('p-email-display').innerText = user;
+
+        async function load() {
+            const res = await fetch(`/api/profile/${user}`);
+            const d = await res.json();
+            document.getElementById('p-name').value = d.name || '';
+            document.getElementById('p-bio').value = d.bio || '';
+            if(d.photo) document.getElementById('p-img').src = d.photo;
+        }
+
+        async function saveProfile() {
+            const fd = new FormData();
+            fd.append('email', user);
+            fd.append('name', document.getElementById('p-name').value);
+            fd.append('bio', document.getElementById('p-bio').value);
+            const file = document.getElementById('p-file').files[0];
+            if(file) fd.append('photo', file);
+
+            const res = await fetch('/api/profile/update', { method: 'POST', body: fd });
+            if(res.ok) alert("Profile Saved!");
+        }
+        load();
+    </script>
+</body>
+</html>
