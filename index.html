@@ -1,90 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volt EXE Builder | Professional HTML to EXE Converter</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #020617;
-            color: #f8fafc;
-        }
-        .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%);
-        }
-        .accent-glow {
-            box-shadow: 0 0 40px -10px #38bdf8;
-        }
-        .btn-gradient {
-            background: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%);
-        }
-    </style>
+    <meta charset="UTF-8"><title>Banana Corp | 3D Market</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="hero-gradient min-h-screen">
-
-    <header class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
-        <div class="text-2xl font-extrabold tracking-tighter italic">
-            VOLT<span class="text-sky-500">PRO</span>
+<body>
+    <div id="auth-screen" class="full-modal">
+        <div class="container-box auth-card" style="text-align:center;">
+            <h1 class="logo">🍌 BANANA</h1>
+            <div id="step-1">
+                <input type="email" id="loginEmail" placeholder="Gmail Address">
+                <button onclick="sendOtp()" class="glow-btn" id="btn-otp">Get Access Key</button>
+            </div>
+            <div id="step-2" style="display:none">
+                <input type="text" id="otpCode" placeholder="Enter Code">
+                <button onclick="verifyOtp()" class="glow-btn" id="btn-verify">Verify</button>
+            </div>
         </div>
-        <nav class="hidden md:flex space-x-10 text-sm font-semibold text-slate-400">
-            <a href="#" class="hover:text-sky-400 transition">Features</a>
-            <a href="#" class="hover:text-sky-400 transition">GitHub</a>
-            <a href="#" class="hover:text-sky-400 transition">Documentation</a>
+    </div>
+
+    <div id="main-content" style="display:none">
+        <nav>
+            <div class="logo">🍌 BANANA</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" onkeyup="searchModels()" placeholder="Search...">
+            </div>
+            <div class="nav-right">
+                <select onchange="setLang(this.value)" class="lang-select" id="langSelector">
+                    <option value="tr">TR 🇹🇷</option>
+                    <option value="en">EN 🇺🇸</option>
+                    <option value="fr">FR 🇫🇷</option>
+                    <option value="es">ES 🇪🇸</option>
+                    <option value="ru">RU 🇷🇺</option>
+                </select>
+                <button onclick="location.href='publish.html'" class="icon-btn"><i class="fas fa-plus-circle"></i></button>
+                <button onclick="location.href='profile.html'" class="icon-btn"><i class="fas fa-user-circle"></i></button>
+            </div>
         </nav>
-    </header>
+        <div id="catalog"></div>
+    </div>
 
-    <main class="max-w-5xl mx-auto px-6 pt-20 pb-32 text-center">
-        <div class="inline-flex items-center px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold uppercase tracking-widest mb-8">
-            v1.0 is now available
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
-            Turn Web Projects into <br>
-            <span class="text-sky-500">Native Windows Apps</span>
-        </h1>
-        
-        <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12">
-            The fastest way to bundle your HTML, CSS, and JS into a single, high-performance executable file. No dependencies, no hassle.
-        </p>
-
-        <div class="flex flex-col items-center gap-4">
-            <a href="Volt_Setup.exe" download 
-               class="btn-gradient px-10 py-5 rounded-2xl text-white font-bold text-xl accent-glow hover:scale-105 transition-transform active:scale-95 flex items-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                DOWNLOAD SETUP
-            </a>
-            <span class="text-slate-500 text-sm font-medium">Compatible with Windows 10 & 11 (64-bit)</span>
-        </div>
-    </main>
-
-    <section class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/50">
-        <div class="grid md:grid-cols-3 gap-12">
-            <div class="space-y-4">
-                <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400 font-bold text-xl">1</div>
-                <h3 class="text-xl font-bold">Single File Output</h3>
-                <p class="text-slate-400 leading-relaxed">Bundles all your assets into one compact .exe for easy distribution.</p>
-            </div>
-            <div class="space-y-4">
-                <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400 font-bold text-xl">2</div>
-                <h3 class="text-xl font-bold">Custom Branding</h3>
-                <p class="text-slate-400 leading-relaxed">Add your own icons and metadata to give your app a professional feel.</p>
-            </div>
-            <div class="space-y-4">
-                <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400 font-bold text-xl">3</div>
-                <h3 class="text-xl font-bold">Offline Support</h3>
-                <p class="text-slate-400 leading-relaxed">Your web apps work seamlessly without an active internet connection.</p>
+    <div id="detail-modal" class="modal-overlay">
+        <div class="modal-window">
+            <span class="close-btn" onclick="closeDetail()">&times;</span>
+            <div id="viewer-area"></div>
+            <div class="info-side">
+                <h1 id="det-name"></h1>
+                <p id="det-desc"></p>
+                <div id="det-cat" class="cat-tag"></div>
+                <button id="likeBtn" class="glow-btn" style="background:#222; color:white;"></button>
+                <button id="downBtn" class="glow-btn"></button>
+                <button id="deleteBtn" class="glow-btn" style="background:#ff4757; display:none;"></button>
             </div>
         </div>
-    </section>
-
-    <footer class="text-center py-20 border-t border-slate-900">
-        <p class="text-slate-600 text-sm italic">
-            Developed by Volt Studio &copy; 2026. All rights reserved.
-        </p>
-    </footer>
-
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
