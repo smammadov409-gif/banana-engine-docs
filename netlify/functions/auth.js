@@ -1,22 +1,26 @@
 const nodemailer = require('nodemailer');
 
 exports.handler = async (event) => {
-    // CORS ayarı (Netlify için önemli)
+    // CORS ayarları: Frontend'den gelen isteğe izin ver
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
 
+    // Preflight (ön kontrol) isteği için
     if (event.httpMethod === 'OPTIONS') {
-        return { statusCode: 200, headers };
+        return { statusCode: 200, headers, body: '' };
+    }
+
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, headers, body: 'Method Not Allowed' };
     }
 
     try {
         const { email } = JSON.parse(event.body);
         const otp = Math.floor(100000 + Math.random() * 900000);
 
-        // Şifreleri doğrudan buradan kontrol ediyoruz
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -35,9 +39,10 @@ exports.handler = async (event) => {
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ success: true })
+            body: JSON.stringify({ success: true, message: "Kod gönderildi!" })
         };
     } catch (error) {
+        console.error("Mail Hatası:", error);
         return {
             statusCode: 500,
             headers,
