@@ -1,7 +1,16 @@
 // NETLİFY API ADRESİ
 const API_BASE = "/.netlify/functions/auth";
 
-// 1. ADIM: MAİL GÖNDERME FONKSİYONU
+// 1. SAYFA YÜKLENDİĞİNDE KONTROL ET (Otomatik Giriş)
+window.onload = () => {
+    const isLoggedIn = localStorage.getItem('banana_auth');
+    if (isLoggedIn === 'true') {
+        console.log("✅ Giriş hatırlatıldı, markete geçiliyor...");
+        showMarket();
+    }
+};
+
+// 2. MAİL GÖNDERME FONKSİYONU
 async function sendOtp() {
     const emailInput = document.getElementById('loginEmail');
     if (!emailInput) return;
@@ -38,11 +47,9 @@ async function sendOtp() {
             document.getElementById('step-2').style.display = 'block';
             
         } else {
-            console.error("❌ Sunucu Hatası:", data.error);
             alert("Hata: " + (data.error || "Mail gönderilemedi."));
         }
     } catch (err) {
-        console.error("🌐 Bağlantı Hatası:", err);
         alert("Sunucuya bağlanılamadı!");
     } finally {
         if(btn) {
@@ -52,36 +59,40 @@ async function sendOtp() {
     }
 }
 
-// 2. ADIM: KODU ONAYLAMA FONKSİYONU (Verify)
+// 3. KODU ONAYLAMA FONKSİYONU
 async function verifyOtp() {
     const otpInput = document.getElementById('otpCode');
     const userCode = otpInput.value.trim();
 
-    if (!userCode) {
-        alert("Lütfen mailine gelen kodu yaz kanka! 🍌");
-        return;
-    }
-
-    // GÜVENLİK NOTU: Gerçek projede bu kod sunucuda kontrol edilir.
-    // Şimdilik 6 haneli herhangi bir kod yazıldığında markete girişe izin veriyoruz.
     if (userCode.length === 6) {
-        console.log("✅ Kod onaylandı, markete giriliyor...");
+        // TARAYICIYA KAYDET (Artık seni tanıyacak)
+        localStorage.setItem('banana_auth', 'true');
         
-        // Giriş ekranını (Auth Screen) tamamen kapat
-        document.getElementById('auth-screen').style.display = 'none';
-        
-        // Ana içeriği (Market) göster
-        document.getElementById('main-content').style.display = 'block';
-        
+        showMarket();
         alert("Hoş geldin! Banana Market Aktif. 🍌🚀");
-        
-        // Eğer varsa modelleri yükleyen fonksiyonu tetikle
-        if (typeof loadModels === "function") {
-            loadModels();
-        }
     } else {
         alert("Kod hatalı veya eksik! Lütfen 6 haneli kodu kontrol et. ❌");
     }
+}
+
+// 4. MARKETİ GÖSTEREN YARDIMCI FONKSİYON
+function showMarket() {
+    const authScreen = document.getElementById('auth-screen');
+    const mainContent = document.getElementById('main-content');
+    
+    if(authScreen) authScreen.style.display = 'none';
+    if(mainContent) mainContent.style.display = 'block';
+    
+    // Eğer varsa modelleri yükleyen fonksiyonun (katalog vs.)
+    if (typeof loadModels === "function") {
+        loadModels();
+    }
+}
+
+// 5. ÇIKIŞ YAPMAK İSTERSEN (Gerekirse bir butona bağlarsın)
+function logout() {
+    localStorage.removeItem('banana_auth');
+    location.reload();
 }
 
 console.log("🍌 Banana App Başlatıldı... Netlify Modu Aktif!");
