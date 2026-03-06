@@ -1,25 +1,19 @@
-// NETLİFY İÇİN DOĞRU ADRES
+// NETLİFY API ADRESİ
 const API_BASE = "/.netlify/functions/auth";
 
+// 1. ADIM: MAİL GÖNDERME FONKSİYONU
 async function sendOtp() {
-    // BURASI DÜZELDİ: HTML'deki ID olan "loginEmail" ile eşitledik!
-    const emailInput = document.getElementById('loginEmail'); 
-    
-    if (!emailInput) {
-        console.error("❌ Hata: loginEmail ID'li kutu bulunamadı!");
-        return;
-    }
+    const emailInput = document.getElementById('loginEmail');
+    if (!emailInput) return;
 
     const email = emailInput.value.trim();
-
     if (!email) {
-        alert("Lütfen geçerli bir mail adresi yaz kanka! 🍌");
+        alert("Lütfen Gmail adresini yaz kanka! 🍌");
         return;
     }
 
     console.log("🚀 Banana Key isteniyor:", email);
     
-    // Butonu geçici olarak kilitle
     const btn = document.getElementById('btn-otp');
     if(btn) {
         btn.disabled = true;
@@ -39,7 +33,7 @@ async function sendOtp() {
             console.log("✅ Mail fırlatıldı!");
             alert("Banana Key mail kutuna fırlatıldı! 🍌");
             
-            // Kod giriş ekranına geçiş yapalım (Senin HTML'indeki step'ler)
+            // Ekranı değiştir (Kod girme alanını aç)
             document.getElementById('step-1').style.display = 'none';
             document.getElementById('step-2').style.display = 'block';
             
@@ -49,12 +43,44 @@ async function sendOtp() {
         }
     } catch (err) {
         console.error("🌐 Bağlantı Hatası:", err);
-        alert("Sunucuya bağlanılamadı kanka!");
+        alert("Sunucuya bağlanılamadı!");
     } finally {
         if(btn) {
             btn.disabled = false;
             btn.innerText = "Get Access Key";
         }
+    }
+}
+
+// 2. ADIM: KODU ONAYLAMA FONKSİYONU (Verify)
+async function verifyOtp() {
+    const otpInput = document.getElementById('otpCode');
+    const userCode = otpInput.value.trim();
+
+    if (!userCode) {
+        alert("Lütfen mailine gelen kodu yaz kanka! 🍌");
+        return;
+    }
+
+    // GÜVENLİK NOTU: Gerçek projede bu kod sunucuda kontrol edilir.
+    // Şimdilik 6 haneli herhangi bir kod yazıldığında markete girişe izin veriyoruz.
+    if (userCode.length === 6) {
+        console.log("✅ Kod onaylandı, markete giriliyor...");
+        
+        // Giriş ekranını (Auth Screen) tamamen kapat
+        document.getElementById('auth-screen').style.display = 'none';
+        
+        // Ana içeriği (Market) göster
+        document.getElementById('main-content').style.display = 'block';
+        
+        alert("Hoş geldin! Banana Market Aktif. 🍌🚀");
+        
+        // Eğer varsa modelleri yükleyen fonksiyonu tetikle
+        if (typeof loadModels === "function") {
+            loadModels();
+        }
+    } else {
+        alert("Kod hatalı veya eksik! Lütfen 6 haneli kodu kontrol et. ❌");
     }
 }
 
