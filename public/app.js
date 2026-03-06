@@ -4,7 +4,7 @@ let allModels = [];
 let curLang = localStorage.getItem('bananaLang') || 'tr';
 
 // BURASI KRİTİK: Render adresin tam olarak bu olmalı
-const API_BASE = "https://banana-engine-docs.onrender.com";
+const API_BASE = "/.netlify/functions/auth";
 
 const langData = {
     tr: { search: "Ara...", likes: "Beğeni", down: "İNDİR", del: "SİL", cat: "Kategori", otp: "Kod Al", verify: "Doğrula" },
@@ -128,3 +128,4 @@ window.setLang = (l) => {
     localStorage.setItem('bananaLang', l);
     location.reload();
 };
+
