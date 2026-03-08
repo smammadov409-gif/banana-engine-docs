@@ -14,6 +14,7 @@
             --card-bg: #161616;
             --text-white: #ffffff;
             --accent-glow: rgba(255, 225, 53, 0.6);
+            --linux-glow: rgba(255, 255, 255, 0.2);
         }
 
         body {
@@ -27,7 +28,6 @@
             min-height: 100vh;
         }
 
-        /* Version Badge */
         .version-tag {
             position: absolute;
             top: 20px;
@@ -84,51 +84,47 @@
 
         .download-area {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
+            max-width: 900px;
         }
 
-        /* Button Styling & Glow Effects */
         .btn {
             text-decoration: none;
-            padding: 18px 35px;
+            padding: 16px 30px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            cursor: pointer;
         }
 
-        .btn-windows {
-            background-color: var(--primary-yellow);
-            color: #000;
+        .btn-windows { background-color: var(--primary-yellow); color: #000; }
+        .btn-android { background-color: transparent; color: var(--text-white); border: 2px solid #333; }
+        .btn-linux { background-color: transparent; color: var(--text-white); border: 2px solid #444; }
+
+        .btn:hover { transform: scale(1.05); }
+        .btn-windows:hover { box-shadow: 0 0 30px var(--accent-glow); background-color: #fff; }
+        .btn-android:hover { border-color: var(--primary-yellow); box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); color: var(--primary-yellow); }
+        .btn-linux:hover { border-color: #fff; box-shadow: 0 0 20px var(--linux-glow); }
+
+        .linux-note {
+            margin-top: 25px;
+            background: rgba(255, 225, 53, 0.05);
+            border: 1px dashed rgba(255, 225, 53, 0.3);
+            padding: 15px 25px;
+            border-radius: 12px;
+            max-width: 600px;
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.5;
         }
 
-        .btn-android {
-            background-color: transparent;
-            color: var(--text-white);
-            border: 2px solid #333;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-        }
-
-        .btn-windows:hover {
-            box-shadow: 0 0 30px var(--accent-glow);
-            background-color: #fff;
-        }
-
-        .btn-android:hover {
-            border-color: var(--primary-yellow);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-            color: var(--primary-yellow);
-        }
+        .linux-note b { color: var(--primary-yellow); }
 
         .features {
             display: grid;
@@ -147,16 +143,8 @@
             transition: 0.3s;
         }
 
-        .f-card i {
-            font-size: 2rem;
-            color: var(--primary-yellow);
-            margin-bottom: 15px;
-        }
-
-        .f-card:hover {
-            border-color: var(--primary-yellow);
-            background: #1c1c1c;
-        }
+        .f-card i { font-size: 2rem; color: var(--primary-yellow); margin-bottom: 15px; }
+        .f-card:hover { border-color: var(--primary-yellow); background: #1c1c1c; }
 
         footer {
             padding: 40px;
@@ -166,10 +154,7 @@
             color: #555;
         }
 
-        footer b {
-            color: var(--text-white);
-            letter-spacing: 1px;
-        }
+        footer b { color: var(--text-white); letter-spacing: 1px; }
 
         @media (max-width: 600px) {
             h1 { font-size: 2.5rem; }
@@ -187,18 +172,24 @@
         </div>
 
         <h1>Bananana Browser</h1>
-        <p class="subtitle">Next-gen web exploration powered by speed and minimalism. Created by Mammadov MirCosqun for the future of the web.</p>
+        <p class="subtitle">Next-gen web exploration powered by speed and minimalism. Created by Mammadov MirCosqun.</p>
 
         <div class="download-area">
             <a href="https://drive.google.com/uc?export=download&id=1dyBI3cxgvMAfsYw9k1MejnJ69Zid7mhZ" class="btn btn-windows">
-                <i class="fa-brands fa-windows"></i>
-                Download for Windows
+                <i class="fa-brands fa-windows"></i> Windows
             </a>
 
             <a href="https://drive.google.com/uc?export=download&id=12rb-UIv_ARdEc6cXbUUsTvQG72SrpRUe" class="btn btn-android">
-                <i class="fa-brands fa-android"></i>
-                Download for Android
+                <i class="fa-brands fa-android"></i> Android
             </a>
+
+            <a href="https://drive.google.com/uc?export=download&id=17wtS-9cxr97WfqCSPOTiAOk0yTJ5cfw2" class="btn btn-linux">
+                <i class="fa-brands fa-linux"></i> Linux
+            </a>
+        </div>
+
+        <div class="linux-note">
+            💡 <b>Note for Linux Users:</b> Extract the zip file, right-click the <u>banana-browser</u> (or electron) file inside the folder, and select <b>'Open with -> Run'</b>.
         </div>
 
         <div class="features">
