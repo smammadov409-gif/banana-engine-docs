@@ -1,15 +1,228 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Redirecting to Banana Corp...</title>
-    <meta http-equiv="refresh" content="0; url=https://famous-puppy-ad223b.netlify.app/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bananana Browser | Mammadov MirCosqun</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script type="text/javascript">
-        window.location.href = "https://famous-puppy-ad223b.netlify.app/";
-    </script>
+    <style>
+        :root {
+            --primary-yellow: #FFE135;
+            --dark-bg: #0a0a0a;
+            --card-bg: #161616;
+            --text-white: #ffffff;
+            --accent-glow: rgba(255, 225, 53, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Version Badge */
+        .version-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 225, 53, 0.1);
+            color: var(--primary-yellow);
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-yellow);
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .logo-container {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--primary-yellow));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 600px;
+            margin: 20px 0 40px 0;
+        }
+
+        .download-area {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Button Styling & Glow Effects */
+        .btn {
+            text-decoration: none;
+            padding: 18px 35px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .btn-windows {
+            background-color: var(--primary-yellow);
+            color: #000;
+        }
+
+        .btn-android {
+            background-color: transparent;
+            color: var(--text-white);
+            border: 2px solid #333;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-windows:hover {
+            box-shadow: 0 0 30px var(--accent-glow);
+            background-color: #fff;
+        }
+
+        .btn-android:hover {
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            color: var(--primary-yellow);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 60px;
+        }
+
+        .f-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
+
+        .f-card i {
+            font-size: 2rem;
+            color: var(--primary-yellow);
+            margin-bottom: 15px;
+        }
+
+        .f-card:hover {
+            border-color: var(--primary-yellow);
+            background: #1c1c1c;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #111;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        footer b {
+            color: var(--text-white);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .version-tag { position: relative; top: 0; right: 0; margin-bottom: 20px; }
+        }
+    </style>
 </head>
 <body>
-    <p>Yönlendiriliyorsunuz... Eğer sayfa açılmazsa <a href="https://famous-puppy-ad223b.netlify.app/">buraya tıklayın</a>.</p>
+
+    <div class="hero">
+        <div class="version-tag">v1.0</div>
+        
+        <div class="logo-container">
+            <i class="fa-solid fa-rocket" style="color: var(--primary-yellow);"></i>
+        </div>
+
+        <h1>Bananana Browser</h1>
+        <p class="subtitle">Next-gen web exploration powered by speed and minimalism. Created by Mammadov MirCosqun for the future of the web.</p>
+
+        <div class="download-area">
+            <a href="https://drive.google.com/uc?export=download&id=1dyBI3cxgvMAfsYw9k1MejnJ69Zid7mhZ" class="btn btn-windows">
+                <i class="fa-brands fa-windows"></i>
+                Download for Windows
+            </a>
+
+            <a href="https://drive.google.com/uc?export=download&id=12rb-UIv_ARdEc6cXbUUsTvQG72SrpRUe" class="btn btn-android">
+                <i class="fa-brands fa-android"></i>
+                Download for Android
+            </a>
+        </div>
+
+        <div class="features">
+            <div class="f-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Turbo Speed</h3>
+                <p>Ultra-fast browsing experience on all devices.</p>
+            </div>
+            <div class="f-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Secure Core</h3>
+                <p>Built with privacy and security at its heart.</p>
+            </div>
+            <div class="f-card">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h3>Clean UI</h3>
+                <p>Distraction-free interface designed for creators.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Developed by <b>Mammadov MirCosqun</b> | 2026
+    </footer>
+
 </body>
 </html>
