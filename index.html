@@ -2,218 +2,157 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bananana Browser | Mammadov MirCosqun</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Digihmations Studio | Global Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-yellow: #FFE135;
-            --dark-bg: #0a0a0a;
-            --card-bg: #161616;
-            --text-white: #ffffff;
-            --accent-glow: rgba(255, 225, 53, 0.6);
-            --linux-glow: rgba(255, 255, 255, 0.2);
-        }
+        :root { --banana: #f7df1e; --bg: #fff; --card: #1d1d1b; --text: #000; --vscode: #007acc; --itch: #fa5c5c; }
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.2, 0, 0, 1); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
+        
+        .ds-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60vw; font-weight: 900; color: rgba(0,0,0,0.02); z-index: -100; pointer-events: none; user-select: none; letter-spacing: -20px; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-white);
-            margin: 0;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        header { height: 90px; background: rgba(255,255,255,0.9); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: space-between; padding: 0 5%; border-bottom: 2px solid #f0f0f0; position: sticky; top: 0; z-index: 1000; }
+        .logo-ds { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: #000; border-radius: 8px; position: relative; }
+        .logo-ds::before, .logo-ds::after { content: 'D'; position: absolute; font-size: 28px; font-weight: 900; color: #fff; }
+        .logo-ds::after { content: 'S'; color: var(--banana); left: 14px; top: 8px; }
 
-        .version-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 225, 53, 0.1);
-            color: var(--primary-yellow);
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 1px solid var(--primary-yellow);
-            font-weight: bold;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            z-index: 10;
-        }
+        nav a { color: #555; text-decoration: none; font-weight: 700; margin-left: 35px; cursor: pointer; font-size: 13px; text-transform: uppercase; }
+        nav a:hover { color: #000; }
 
-        .hero {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-        }
+        .container { max-width: 1300px; margin: auto; padding: 60px 20px; }
 
-        .logo-container {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px var(--primary-yellow));
-            animation: float 3s ease-in-out infinite;
-        }
+        .hero { background: var(--banana); border-radius: 40px; min-height: 400px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; border: 1px solid rgba(0,0,0,0.1); margin-bottom: 80px; position: relative; overflow: hidden; padding: 60px; }
+        .hero h1 { font-size: clamp(30px, 6vw, 70px); color: #000; margin: 0; letter-spacing: -3px; font-weight: 900; line-height: 0.9; }
+        .hero p { color: #000; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 5px; margin-top: 20px; opacity: 0.7; }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
+        .card { background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid #333; position: relative; color: #fff; z-index: 1; display: flex; flex-direction: column; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 80px; background: var(--banana); border-radius: 30px 30px 0 0; z-index: -1; transform: translateY(-30px); }
+        .card h3 { color: #000; font-size: 28px; margin-top: -10px; font-weight: 900; margin-bottom: 20px; }
 
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin: 0;
-            background: linear-gradient(135deg, #fff 30%, var(--primary-yellow) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
-        }
+        .games-list { background: #000; border-radius: 15px; border: 1px solid #222; margin-bottom: 25px; flex: 1; overflow: hidden; }
+        .game-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #222; text-decoration: none; color: #eee; font-size: 14px; font-weight: 600; }
+        .game-item:hover { background: #111; color: var(--banana); padding-left: 25px; }
+        .author { font-size: 9px; color: var(--banana); text-transform: uppercase; background: #222; padding: 3px 8px; border-radius: 4px; font-weight: 900; }
 
-        p.subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 600px;
-            margin: 20px 0 40px 0;
-        }
+        .btn { display: block; width: 100%; padding: 18px; background: transparent; color: var(--banana); text-align: center; text-decoration: none; font-weight: 900; border-radius: 12px; border: 2px solid #333; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; }
+        .btn:hover { background: var(--banana); color: #000; border-color: var(--banana); transform: scale(1.02); }
+        .btn-soon { opacity: 0.3; cursor: not-allowed; border-style: dashed; }
 
-        .download-area {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 900px;
-        }
+        .thanks-section { margin-top: 100px; text-align: center; padding: 80px 20px; background: var(--card); border-radius: 50px 50px 0 0; }
+        .thanks-grid { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-top: 40px; }
+        .tool-btn { display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; color: #fff; font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
+        .tool-img { width: 70px; height: 70px; object-fit: contain; animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .btn {
-            text-decoration: none;
-            padding: 16px 30px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
+        #docs { display: none; position: fixed; inset: 0; background: #fff; z-index: 9999; padding: 60px 5%; overflow-y: auto; color: #000; }
+        .docs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        .close-btn { background: #000; color: #fff; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .docs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .docs-card { background: #f9f9f9; padding: 20px; border-radius: 15px; border: 1px solid #eee; }
+        code { background: #111; color: var(--banana); padding: 12px; border-radius: 8px; display: block; font-family: 'Consolas', monospace; font-size: 13px; line-height: 1.5; overflow-x: auto; }
 
-        .btn-windows { background-color: var(--primary-yellow); color: #000; }
-        .btn-android { background-color: transparent; color: var(--text-white); border: 2px solid #333; }
-        .btn-linux { background-color: transparent; color: var(--text-white); border: 2px solid #444; }
-
-        .btn:hover { transform: scale(1.05); }
-        .btn-windows:hover { box-shadow: 0 0 30px var(--accent-glow); background-color: #fff; }
-        .btn-android:hover { border-color: var(--primary-yellow); box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); color: var(--primary-yellow); }
-        .btn-linux:hover { border-color: #fff; box-shadow: 0 0 20px var(--linux-glow); }
-
-        .linux-note {
-            margin-top: 25px;
-            background: rgba(255, 225, 53, 0.05);
-            border: 1px dashed rgba(255, 225, 53, 0.3);
-            padding: 15px 25px;
-            border-radius: 12px;
-            max-width: 600px;
-            font-size: 0.9rem;
-            color: #ccc;
-            line-height: 1.5;
-        }
-
-        .linux-note b { color: var(--primary-yellow); }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1000px;
-            margin-top: 60px;
-        }
-
-        .f-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid #222;
-            transition: 0.3s;
-        }
-
-        .f-card i { font-size: 2rem; color: var(--primary-yellow); margin-bottom: 15px; }
-        .f-card:hover { border-color: var(--primary-yellow); background: #1c1c1c; }
-
-        footer {
-            padding: 40px;
-            text-align: center;
-            border-top: 1px solid #111;
-            font-size: 1rem;
-            color: #555;
-        }
-
-        footer b { color: var(--text-white); letter-spacing: 1px; }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .version-tag { position: relative; top: 0; right: 0; margin-bottom: 20px; }
-        }
+        footer { text-align: center; padding: 40px; background: var(--card); }
+        .footer-text { color: #333; font-size: 11px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+        .signature { color: #555; font-size: 10px; font-weight: 400; text-transform: lowercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-    <div class="hero">
-        <div class="version-tag">v1.0</div>
-        
-        <div class="logo-container">
-            <i class="fa-solid fa-rocket" style="color: var(--primary-yellow);"></i>
+    <div class="ds-watermark">DS</div>
+
+    <header>
+        <div class="header-left">
+            <div class="logo-ds"></div>
+            <div class="logo-text" style="margin-left:15px; font-weight:900; text-transform:uppercase; letter-spacing:1px;">Digihmations <span style="color:var(--banana)">Studio</span></div>
+        </div>
+        <nav>
+            <a onclick="openDocs()">Docs & API</a>
+            <a href="https://itch.io" target="_blank">Itch.io</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>NEXT-GEN <br>GAME ENGINES</h1>
+            <p>Developing the Future of Web & Mobile</p>
         </div>
 
-        <h1>Bananana Browser</h1>
-        <p class="subtitle">Next-gen web exploration powered by speed and minimalism. Created by Mammadov MirCosqun.</p>
-
-        <div class="download-area">
-            <a href="https://drive.google.com/uc?export=download&id=1dyBI3cxgvMAfsYw9k1MejnJ69Zid7mhZ" class="btn btn-windows">
-                <i class="fa-brands fa-windows"></i> Windows
-            </a>
-
-            <a href="https://drive.google.com/uc?export=download&id=12rb-UIv_ARdEc6cXbUUsTvQG72SrpRUe" class="btn btn-android">
-                <i class="fa-brands fa-android"></i> Android
-            </a>
-
-            <a href="https://drive.google.com/uc?export=download&id=17wtS-9cxr97WfqCSPOTiAOk0yTJ5cfw2" class="btn btn-linux">
-                <i class="fa-brands fa-linux"></i> Linux
-            </a>
-        </div>
-
-        <div class="linux-note">
-            💡 <b>Note for Linux Users:</b> Extract the zip file, right-click the <u>banana-browser</u> (or electron) file inside the folder, and select <b>'Open with -> Run'</b>.
-        </div>
-
-        <div class="features">
-            <div class="f-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>Turbo Speed</h3>
-                <p>Ultra-fast browsing experience on all devices.</p>
+        <div class="grid">
+            <div class="card">
+                <h3>Banana Engine 2D</h3>
+                <div class="games-list">
+                    <a href="https://mammadovcubby.itch.io/banana-bird-so-edition" class="game-item" target="_blank">Banana Bird <span class="author">by mammadovcubby</span></a>
+                    <a href="https://mammadovcubby.itch.io/bananarex" class="game-item" target="_blank">Banana REX <span class="author">by mammadovcubby</span></a>
+                    <a href="https://12sdee.itch.io/zombiehunt" class="game-item" target="_blank">Zombie Hunt <span class="author">by 12sdee</span></a>
+                    <a href="https://12sdee.itch.io/fruitsamuray" class="game-item" target="_blank">Fruit Samurai <span class="author">by 12sdee</span></a>
+                </div>
+                <a href="https://malidek12.itch.io/bananaengine-high-speed-js-game-engine" class="btn" target="_blank">Download 2D Engine</a>
             </div>
-            <div class="f-card">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h3>Secure Core</h3>
-                <p>Built with privacy and security at its heart.</p>
+
+            <div class="card">
+                <h3>Banana Engine 2.5D</h3>
+                <div style="height:215px; display:flex; align-items:center; justify-content:center; background:#000; border-radius:15px; border:1px solid #222; margin-bottom:25px; color:#333; font-weight:900; letter-spacing:4px; font-size:11px;">RETRO-FPS PORTAL</div>
+                <a href="https://malidek12.itch.io/banana-engine25d" class="btn" target="_blank">Download 2.5D Engine</a>
             </div>
-            <div class="f-card">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <h3>Clean UI</h3>
-                <p>Distraction-free interface designed for creators.</p>
+
+            <div class="card">
+                <h3>Banana Engine 3D</h3>
+                <div style="height:215px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#000; border-radius:15px; border:1px solid #222; margin-bottom:25px;">
+                    <span style="color:#222; font-size:40px; font-weight:900;">3D</span>
+                    <span style="color:var(--banana); font-size:10px; letter-spacing:3px; margin-top:10px;">UNDER DEVELOPMENT</span>
+                </div>
+                <button class="btn btn-soon">Coming Soon</button>
             </div>
         </div>
     </div>
 
+    <div class="thanks-section">
+        <h2 style="color:#aaa; font-size:12px; text-transform:uppercase; letter-spacing:5px;">Developed with</h2>
+        <div class="thanks-grid">
+            <a href="https://code.visualstudio.com" class="tool-btn" target="_blank">
+                <img src="Vs Code.png" alt="VS Code" class="tool-img">
+                <span>VS Code</span>
+            </a>
+            <a href="https://itch.io" class="tool-btn" target="_blank">
+                <img src="itch (1).png" alt="Itch.io" class="tool-img">
+                <span>Itch.io</span>
+            </a>
+        </div>
+    </div>
+
+    <div id="docs">
+        <div class="docs-header">
+            <h2 style="margin:0; font-size:32px; font-weight:900;">Engine Documentation</h2>
+            <button class="close-btn" onclick="closeDocs()">Close</button>
+        </div>
+        <div class="docs-grid">
+            <div class="docs-card"><h4>#01 Init</h4><code>Banana.Init();</code></div>
+            <div class="docs-card"><h4>#02 Move</h4><code>Banana2D.Move();</code></div>
+            <div class="docs-card"><h4>#03 Raycast</h4><code>BananaRay.Cast();</code></div>
+            <div class="docs-card"><h4>#04 Map</h4><code>Banana.LoadMap();</code></div>
+            <div class="docs-card"><h4>#05 Hits</h4><code>Banana.CheckHit();</code></div>
+            <div class="docs-card"><h4>#06 Sprites</h4><code>Banana.AddSprite();</code></div>
+            <div class="docs-card"><h4>#07 Audio</h4><code>Banana.PlaySfx();</code></div>
+            <div class="docs-card"><h4>#08 Mobile</h4><code>Banana.Mobile();</code></div>
+            <div class="docs-card"><h4>#09 Text</h4><code>Banana.DrawText();</code></div>
+            <div class="docs-card"><h4>#10 3D Vector</h4><code>Banana3D.Vector();</code></div>
+        </div>
+    </div>
+
     <footer>
-        Developed by <b>Mammadov MirCosqun</b> | 2026
+        <div class="footer-text">DIGIHMATIONS STUDIO &copy; 2026</div>
+        <div class="signature">mammadov mir cosqun</div>
     </footer>
 
+    <script>
+        function openDocs() { document.getElementById('docs').style.display = 'block'; document.body.style.overflow = 'hidden'; }
+        function closeDocs() { document.getElementById('docs').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        window.addEventListener('scroll', () => {
+            const scroll = window.pageYOffset;
+            document.querySelector('.ds-watermark').style.transform = `translate(-50%, -50%) rotate(${scroll * 0.02}deg)`;
+        });
+    </script>
 </body>
 </html>
